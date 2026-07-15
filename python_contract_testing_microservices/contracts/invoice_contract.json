@@ -1,0 +1,25 @@
+{
+  "consumer": "InvoiceConsumer",
+  "provider": "InvoiceProvider",
+  "interaction": {
+    "description": "Consumer requests invoice by id",
+    "request": {
+      "method": "GET",
+      "path": "/invoices/1"
+    },
+    "response": {
+      "status": 200,
+      "bodySchema": {
+        "type": "object",
+        "required": ["invoiceId", "customerName", "amount", "status"],
+        "properties": {
+          "invoiceId": {"type": "integer"},
+          "customerName": {"type": "string"},
+          "amount": {"type": "number"},
+          "status": {"type": "string", "enum": ["PAID", "PENDING", "CANCELLED"]}
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

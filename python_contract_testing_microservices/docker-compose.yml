@@ -1,0 +1,23 @@
+services:
+
+  # ─── Θέμα 1: RabbitMQ για Message Microservices ───────────────────────────
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"     # AMQP (producer/consumer)
+      - "15672:15672"   # Management UI → http://localhost:15672  (guest/guest)
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Θέμα 2: FastAPI Invoice Provider ─────────────────────────────────────
+  provider:
+    build:
+      context: .
+      dockerfile: Dockerfile.provider
+    container_name: invoice-provider
+    ports:
+      - "8000:8000"     # REST API → http://localhost:8000/docs

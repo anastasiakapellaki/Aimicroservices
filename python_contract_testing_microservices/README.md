@@ -39,7 +39,7 @@ pytest -v
 Expected result:
 
 ```text
-2 passed
+4 passed
 ```
 
 ## 4. Run provider microservice

@@ -1,38 +1,32 @@
-import json
+import threading
+import time
 from pathlib import Path
 
-import jsonschema
 import pytest
-from fastapi.testclient import TestClient
+import uvicorn
+from pact import Verifier
 
-from provider.main import app
-
-client = TestClient(app)
-
-_CONTRACT_PATH = Path(__file__).parent.parent / "contracts" / "invoice_contract.json"
-
-
-def _load_schema() -> dict:
-    return json.loads(_CONTRACT_PATH.read_text())["interaction"]["response"]["bodySchema"]
+PROVIDER_HOST = "127.0.0.1"
+PROVIDER_PORT = 8001
+PROVIDER_URL = f"http://{PROVIDER_HOST}:{PROVIDER_PORT}"
+PACT_PATH = str(Path(__file__).parent.parent / "pacts" / "InvoiceConsumer-InvoiceProvider.json")
 
 
-def test_provider_satisfies_contract():
-    """Provider GET /invoices/1 returns 200 and a body that validates against the contract schema."""
-    schema = _load_schema()
-    response = client.get("/invoices/1")
+@pytest.fixture(scope="module", autouse=True)
+def provider_server():
+    from provider.main import app
 
-    assert response.status_code == 200
-    jsonschema.validate(instance=response.json(), schema=schema)
+    config = uvicorn.Config(app, host=PROVIDER_HOST, port=PROVIDER_PORT, log_level="error")
+    server = uvicorn.Server(config)
+    t = threading.Thread(target=server.run, daemon=True)
+    t.start()
+    time.sleep(1)
+    yield
+    server.should_exit = True
 
 
-def test_contract_violation_detected_by_schema():
-    """Breaking change: 'customerName' renamed to 'customer' fails schema validation."""
-    schema = _load_schema()
-    broken_body = {
-        "invoiceId": 1,
-        "customer": "Maria Papadopoulou",   # renamed — BREAKING CHANGE
-        "amount": 120.5,
-        "status": "PAID",
-    }
-    with pytest.raises(jsonschema.ValidationError):
-        jsonschema.validate(instance=broken_body, schema=schema)
+def test_provider_verifies_consumer_pact():
+    """Provider verifies it satisfies the Consumer-generated Pact contract."""
+    verifier = Verifier(provider="InvoiceProvider", provider_base_url=PROVIDER_URL)
+    output, _ = verifier.verify_pacts(PACT_PATH)
+    assert output == 0

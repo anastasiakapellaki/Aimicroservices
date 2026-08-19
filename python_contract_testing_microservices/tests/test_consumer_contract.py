@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pytest
 from pact import Consumer, Provider
 
 from consumer.client import InvoiceConsumer
@@ -14,6 +15,14 @@ pact = Consumer("InvoiceConsumer").has_pact_with(
     port=PACT_PORT,
     pact_dir=PACT_DIR,
 )
+
+
+@pytest.fixture(scope="module", autouse=True)
+def pact_server():
+    """Start the Pact mock server for the duration of the module's tests."""
+    pact.start_service()
+    yield
+    pact.stop_service()
 
 
 def test_get_invoice_matches_contract():

@@ -1,0 +1,50 @@
+I, [2026-08-19T18:19:23.924788 #1516]  INFO -- : Cleared interactions
+I, [2026-08-19T18:19:23.937778 #1516]  INFO -- : Registered expected interaction GET /invoices/1
+D, [2026-08-19T18:19:23.938351 #1516] DEBUG -- : {
+  "description": "a GET request for invoice 1",
+  "providerState": "invoice 1 exists",
+  "request": {
+    "method": "GET",
+    "path": "/invoices/1"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+    },
+    "body": {
+      "invoiceId": 1,
+      "customerName": "Maria Papadopoulou",
+      "amount": 120.5,
+      "status": "PAID"
+    }
+  },
+  "metadata": null
+}
+I, [2026-08-19T18:19:23.973525 #1516]  INFO -- : Received request GET /invoices/1
+D, [2026-08-19T18:19:23.974267 #1516] DEBUG -- : {
+  "path": "/invoices/1",
+  "query": "",
+  "method": "get",
+  "headers": {
+    "Host": "localhost:1234",
+    "User-Agent": "python-requests/2.32.3",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept": "*/*",
+    "Connection": "keep-alive",
+    "Version": "HTTP/1.1"
+  }
+}
+I, [2026-08-19T18:19:23.975258 #1516]  INFO -- : Found matching response for GET /invoices/1
+D, [2026-08-19T18:19:23.976310 #1516] DEBUG -- : {
+  "status": 200,
+  "headers": {
+  },
+  "body": {
+    "invoiceId": 1,
+    "customerName": "Maria Papadopoulou",
+    "amount": 120.5,
+    "status": "PAID"
+  }
+}
+I, [2026-08-19T18:19:24.019781 #1516]  INFO -- : Verifying - interactions matched
+I, [2026-08-19T18:19:24.031472 #1516]  INFO -- : Writing pact for InvoiceProvider to C:/Users/ANASTASIA/Aimicroservices/python_contract_testing_microservices/pacts/invoiceconsumer-invoiceprovider.json

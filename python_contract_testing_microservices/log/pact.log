@@ -1,0 +1,7 @@
+# Logfile created on 2026-08-19 18:19:04 +0300 by logger.rb/v1.5.3
+I, [2026-08-19T18:19:08.375113 #11876]  INFO -- : Running example 'Verifying a pact between InvoiceConsumer and InvoiceProvider Given invoice 1 exists a GET request for invoice 1 with GET /invoices/1 returns a response which has status code 200'
+I, [2026-08-19T18:19:08.375590 #11876]  INFO -- : Sending GET request to path: "/invoices/1" with headers: {"X_PACT_PROVIDER_STATES"=>[{"name"=>"invoice 1 exists"}]}, see debug logs for body
+I, [2026-08-19T18:19:08.491854 #11876]  INFO -- : Received response with status: 200, headers: {"Date"=>"Wed, 19 Aug 2026 15:19:08 GMT", "Server"=>"uvicorn", "Content-Length"=>"82", "Content-Type"=>"application/json"}, see debug logs for body
+I, [2026-08-19T18:19:36.858234 #23336]  INFO -- : Running example 'Verifying a pact between InvoiceConsumer and InvoiceProvider Given invoice 1 exists a GET request for invoice 1 with GET /invoices/1 returns a response which has status code 200'
+I, [2026-08-19T18:19:36.858935 #23336]  INFO -- : Sending GET request to path: "/invoices/1" with headers: {"X_PACT_PROVIDER_STATES"=>[{"name"=>"invoice 1 exists"}]}, see debug logs for body
+I, [2026-08-19T18:19:36.935384 #23336]  INFO -- : Received response with status: 200, headers: {"Date"=>"Wed, 19 Aug 2026 15:19:36 GMT", "Server"=>"uvicorn", "Content-Length"=>"82", "Content-Type"=>"application/json"}, see debug logs for body

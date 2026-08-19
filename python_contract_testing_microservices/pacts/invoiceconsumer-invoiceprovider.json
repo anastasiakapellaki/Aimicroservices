@@ -1,0 +1,34 @@
+{
+  "consumer": {
+    "name": "InvoiceConsumer"
+  },
+  "provider": {
+    "name": "InvoiceProvider"
+  },
+  "interactions": [
+    {
+      "description": "a GET request for invoice 1",
+      "providerState": "invoice 1 exists",
+      "request": {
+        "method": "GET",
+        "path": "/invoices/1"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "invoiceId": 1,
+          "customerName": "Maria Papadopoulou",
+          "amount": 120.5,
+          "status": "PAID"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}
